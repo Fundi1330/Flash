@@ -1,0 +1,41 @@
+{# {% load static tailwind_tags %}     {% tailwind_css %} #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% block head %}
+    {% endblock %}
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class="menu h-24 bg-teal-500 w-full">
+        <ul class="flex justify-center items-center h-full">
+            {% if request.user.is_authenticated %}
+                <li class="m-6 text-lg text-gray-50"><a href="/">Main</a></li>
+                <li class="m-6 text-lg text-gray-50">Search</li>
+                <li class="m-6 text-lg text-gray-50">Messager</li>
+                <li class="m-6 text-lg text-gray-50">Main</li>
+                <li class="m-6 text-lg text-gray-50"><a href="/login"><svg class="h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></a></svg></li>
+            {% else %}
+                <li class="m-6 text-lg text-gray-50"><a href="/">Main</a></li>
+                <li class="m-6 text-lg text-gray-50"><button><svg class="h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg></button></li>
+                <li class="m-6 text-lg text-gray-50"><a href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <main class="container p-4 mx-auto text-center">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="footer"></footer>
+</body>
+</html>
