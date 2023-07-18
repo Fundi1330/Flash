@@ -1,8 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Flash</h1>
-    {% for post in posts %}
-        {{ post.text }}
-    {% endfor %}
+    <h1 class="text-3xl">Flash</h1>
+    <label for="post" class="block">Create new post</label>
+    <input type="text" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded" placeholder="Write something here..." id="post" onclick="show('new_post', this);">
+    <dialog id="new_post" class="absolute shadow-lg h-fit rounded-md z-10 self-center top-0 left-0 right-0 bottom-0 p-8">
+        <button id="close-btn" onclick="closeDialog(this);" class="float-right" data-id="new_post" data-post="true" data-input_id="post"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+        {% csrf_token %}
+        <h2 class="text-2xl">New post</h2>
+        <div class="max-h-80 max-w-80 float-left mr-6 h-80 w-80" style="display: none;" id="img-container">
+            <img src="" id="post-img" alt="post-img" class=" max-w-full object-cover">
+        </div>
+        <fieldset class="float-right">
+            <div class="mt-3">
+                <label for="post_title" class="block">Post title</label>
+                <input type="text" name="post_title" maxlength="120" id="post_title" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded">
+            </div>
+            <div class="mt-3">
+                <label for="post_body" class="block">Post body</label>
+                <textarea name="post_body" id="post_body" maxlength="2500" cols="50" rows="10" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded"></textarea>
+            </div>
+            <div class="mt-3">
+                <label for="post_image" class="block">Post image</label>
+                <input type="file" name="post_image" id="post_image" accept="image/png, image/jpg">
+            </div>
+            <input type="submit" value="Create" id="create-post-btn" class="bg-teal-500 form-input focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">
+        </fieldset>
+        
+    </dialog>
+    <section id="posts">
+        
+        {% include 'macros/posts.html' with posts=posts main=True %}
+        
+    </section>
+    
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" integrity="sha512-cyzxRvewl+FOKTtpBzYjW6x6IAYUCZy3sGP40hn+DQkqeluGRCax7qztK2ImL64SA+C7kVWdLI6wvdlStawhyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" integrity="sha512-6lplKUSl86rUVprDIjiW8DuOniNX8UDoRATqZSds/7t6zCQZfaCe3e5zcGaQwxa8Kpn5RTM9Fvl3X2lLV4grPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="{% static 'js/add_post.js' %}"></script>
+    <script src="{% static 'js/close.js' %}"></script>
 {% endblock %}

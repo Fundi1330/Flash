@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'flash_app.apps.FlashAppConfig',
     'tailwind',
     'flash_css',
-    'django_browser_reload'
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +86,7 @@ DATABASES = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login'
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -97,7 +98,7 @@ LOGOUT_URL = 'logout'
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 MEDIA_ROOT = join(BASE_DIR.absolute(), 'media\\')
-MEDIA_URL = 'media.flash.pythonanywhere.com/'
+MEDIA_URL = '/media/'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

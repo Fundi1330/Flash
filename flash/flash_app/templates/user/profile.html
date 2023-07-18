@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="flex sm:gap-8 gap-2">
+        <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="rounded-full border border-neutral-300 h-36 w-36">
+        <div class="text-left">
+            <h4 class="text-2xl">{{ user.username }}</h4>
+            <h4 class="text-xl">{{ user.full_name }}</h4>
+            <p class="text-sm">{{ user.bio }}</p>
+            <p>{{ posts|length }} post{{ posts|length|pluralize:'s' }}</p>
+        </div>
+        {% if request.user == user %}
+            <a href="/logout" class="text-blue-500 text-lg ml-auto order-2 flex items-center">Logout</a>
+        {% endif %}
+    </section>
+    <hr class="bg-neutral-600 my-2">
+    <section>
+        <div class="grid grid-cols-1 gap-3 w-full lg:grid-cols-3 sm:grid-cols-2">
+            {% include 'macros/posts.html' with posts=posts %}
+        </div>
+    </section>
+{% endblock %}
