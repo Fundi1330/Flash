@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <h1 class="text-3xl">Flash</h1>
     <label for="post" class="block">Create new post</label>
     <input type="text" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded" placeholder="Write something here..." id="post" onclick="show('new_post', this);">
@@ -28,6 +29,7 @@
         </fieldset>
         
     </dialog>
+
     <section id="posts">
         
         {% include 'macros/posts.html' with posts=posts main=True %}
@@ -35,9 +37,10 @@
     </section>
     
     {% load static %}
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" integrity="sha512-cyzxRvewl+FOKTtpBzYjW6x6IAYUCZy3sGP40hn+DQkqeluGRCax7qztK2ImL64SA+C7kVWdLI6wvdlStawhyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" integrity="sha512-6lplKUSl86rUVprDIjiW8DuOniNX8UDoRATqZSds/7t6zCQZfaCe3e5zcGaQwxa8Kpn5RTM9Fvl3X2lLV4grPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
     <script src="{% static 'js/add_post.js' %}"></script>
     <script src="{% static 'js/close.js' %}"></script>
 {% endblock %}

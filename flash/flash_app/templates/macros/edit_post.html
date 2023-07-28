@@ -1,0 +1,21 @@
+<dialog id="{{ post.id }}-edit" class="absolute shadow-lg h-fit rounded-md z-10 self-center top-0 left-0 right-0 bottom-0 p-8">
+    <button id="close-btn" onclick="closeDialog(this); document.getElementById('{{ post.id }}').show();" class="float-right" data-id="{{ post.id }}-edit" data-post="true" data-input_id="post"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+    {% csrf_token %}
+    <h2 class="text-2xl">Edit post</h2>
+    <div class="max-h-80 max-w-80 float-left mr-6 h-80 w-80" id="img-container">
+        <img src="/media/{{ post.images }}" id="post-img" alt="post-img" class="max-w-full object-cover">
+    </div>
+    <fieldset class="float-right">
+        <div class="mt-3">
+            <label for="edit-post-title" class="block">Post title</label>
+            <input type="text" value="{{ post.title }}" name="edit-post-title" maxlength="120" id="edit-post-title-{{ post.id }}" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded">
+        </div>
+        <div class="mt-3">
+            <label for="edit-post-body" class="block">Post body</label>
+            <textarea name="post_body" id="edit-post-body-{{ post.id }}" maxlength="2500" cols="50" rows="10" class="w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded">{{ post.text }}</textarea>
+        </div>
+
+        <input type="submit" data-id="{{ post.id }}" value="Edit" id="edit-post-btn" class="edit-post-btn bg-teal-500 form-input focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">
+    </fieldset>
+
+</dialog>

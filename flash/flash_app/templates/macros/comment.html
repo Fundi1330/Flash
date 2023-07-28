@@ -1,0 +1,12 @@
+<div class="w-full h-fit flex items-start justify-start">
+    <img class="self-start rounded-full border border-neutral-300 h-12 w-12" src="../..{{ comment.author.avatar.url }}" alt="{{ comment.author.username }}">
+    <div class="ml-3 my-6 text-left">
+        <p class="font-bold">{{ comment.author.username }}</p>
+        {% if comment.text|length > 150 %}
+            <p class="break-words">{{ post.text|slice:"0:150" }}<button class="bg-none border-none" onclick="this.parentNode.innerText=`{{ post.text }}`">...</button></p>
+            
+        {% else %}
+            <p class="break-words">{{ comment.text }}</p>
+        {% endif %}
+    </div>
+</div>

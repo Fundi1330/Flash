@@ -20,12 +20,11 @@ class FlashUserManager(UserManager):
         return self._create_user(email=email, password=password, extra_fiels=extra_fields)
 
 class FlashUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(blank=True, default='', unique=True)
+    email = models.EmailField(default='', unique=True)
     username = models.CharField(max_length=50, unique=True)
     full_name = models.CharField(max_length=70)
     avatar = models.ImageField(upload_to='./images/avatars', default='./images/avatars/default.png')
-    # password = models.CharField(max_length=120)
-    bio = models.CharField(max_length=120, default='')
+    bio = models.CharField(max_length=150, default='')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -35,3 +34,6 @@ class FlashUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def __str__(self) -> str:
+        return f'<FlashUser {self.username}>'

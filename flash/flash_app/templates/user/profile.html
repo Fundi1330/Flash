@@ -1,22 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="flex sm:gap-8 gap-2">
-        <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="rounded-full border border-neutral-300 h-36 w-36">
-        <div class="text-left">
-            <h4 class="text-2xl">{{ user.username }}</h4>
-            <h4 class="text-xl">{{ user.full_name }}</h4>
-            <p class="text-sm">{{ user.bio }}</p>
-            <p>{{ posts|length }} post{{ posts|length|pluralize:'s' }}</p>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <section class="flex gap-8">
+        {% csrf_token %}
+        <div class="flex sm:gap-8 gap-2">
+            <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="rounded-full border border-neutral-300 h-36 w-36">
+            <div class="text-left">
+                <h4 class="text-2xl">{{ user.username }}</h4>
+                <h4 class="text-xl">{{ user.full_name }}</h4>
+                <p class="text-sm max-w-xs" id="user-bio">{{ user.bio }}</p>
+                <p>{{ posts|length }} post{{ posts|length|pluralize:'s' }}</p>
+            </div>
         </div>
-        {% if request.user == user %}
-            <a href="/logout" class="text-blue-500 text-lg ml-auto order-2 flex items-center">Logout</a>
-        {% endif %}
+        <div class="flex items-center">
+            <p><span id="followers-num">{{ followers|length }}</span> <span id="followers">follower{{  followers|length|pluralize:'s' }}</span></p>
+        </div>
+        
+        <div class="flex float-right order-2 ml-auto gap-4 items-center">
+            {% if not request.user in followers and request.user != user %}
+                <button id="follow-btn" data-user="{{ user.id }}" class="bg-teal-500 form-input h-fit focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">
+                    Follow
+                </button>
+            {% elif request.user in followers and request.user != user %}
+                <button id="follow-btn" data-user="{{ user.id }}" class="bg-teal-500 form-input h-fit focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">
+                    Unfollow
+                </button>
+            {% endif %}
+            {% if request.user == user %}
+                <button onclick="document.getElementById('dark').style.display = 'block'; document.getElementById('edit-profile').show();"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
+                </button>
+                <a href="/logout" class="text-blue-500 text-lg flex items-center">Logout</a>
+            {% endif %}
+        </div>
+        
     </section>
+    <div class="fixed left-0 right-0 top-0 bottom-0" style="background-color: rgba(0, 0, 0, 0.6); display: none;" id="dark"></div>
+    <dialog id="edit-profile" style="height: 90%; width: 80%;" class="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-md z-15 p-8">
+        <button id="{{ post.id}}-close" class="float-right" data-id="edit-profile" onclick="closeDialog(this);document.getElementById('dark').style.display = 'none'; document.body.style.overflow = 'auto';"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+        <label for="bio">Edit bio</label>
+        <textarea name="bio" id="bio" cols="30" maxlength="150" rows="10" class="mx-3 w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded">{{ user.bio }}</textarea>
+        <input type="submit" data-url="/profile/{{ user.id }}" id="edit-profile-btn" value="Update" class="bg-teal-500 form-input focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">
+    </dialog>
     <hr class="bg-neutral-600 my-2">
     <section>
         <div class="grid grid-cols-1 gap-3 w-full lg:grid-cols-3 sm:grid-cols-2">
             {% include 'macros/posts.html' with posts=posts %}
         </div>
     </section>
+    {% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js" integrity="sha512-4uLji4UnTkA9AWSkIT2+sTQyRqox+O/e+JVkJA7zf+11CJDTxNEaMq13LRvYsu8Mv0kfpnePOIoS0Z0f8VlGgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}
