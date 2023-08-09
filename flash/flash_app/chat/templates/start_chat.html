@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% csrf_token %}
+    <div class="block">
+        {% for user in users %}
+            <div class="flex gap-2">
+                <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="h-14 w-14 rounded-full border border-neutral-300 object-cover">
+                <button onclick="create_chat(this);" data-id="{{ user.id }}">{{ user.username }}</button>
+            </div>
+            {% empty %}
+            <a href="/chats" class="text-blue-500 text-lg">You can't start a new chat. Go to your chats</a>
+        {% endfor %}
+    </div>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="{% static 'js/create_chat.js' %}"></script>
+{% endblock %}

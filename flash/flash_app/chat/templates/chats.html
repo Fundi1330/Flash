@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    {% for chat in chats %}
+        <a href="/chat/{{ chat.id }}">
+            <div class="flex items-center gap-1">
+                <img src="../..{{ chat.avatar.url }}" alt="{{ chat.name }}" class="h-14 w-14 rounded-full border border-neutral-300 object-cover">
+                <span>{{ chat.name }}</span>
+            </div>
+        </a>
+        <hr class="w-28 my-2">
+    {% endfor %}
+{% endblock %}

@@ -68,8 +68,8 @@ function ajax() {
                 'text': $('#post_body').val()
             },
             'success': (data) => {
-                let dialog = document.getElementById('new_post').close();
-                document.getElementById('posts').innerHTML += data['post'];
+                document.getElementById('new_post').close();
+                document.getElementById('posts').insertAdjacentHTML(data['post']);
             }
         });
     });

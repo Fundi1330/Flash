@@ -22,7 +22,17 @@ class HomeView(TemplateView):
     template_name = 'index.html'
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all().order_by('-create_date')
+        following = [user.user for user in Follower.objects.all() if user.follower == self.request.user]
+        following.extend(Follower.objects.filter(user=self.request.user).all())
+        if following == []:
+            context['posts'] = Post.objects.all().order_by('-create_date')
+        else:
+            posts = []
+            for post in Post.objects.all().order_by('-create_date'):
+                if post.author in following or post.author == self.request.user:
+                    posts.append(post)
+            
+            context['posts'] = posts
         context['add_post_form'] = PostForm()
         return context
 
@@ -67,6 +77,7 @@ class DeletePostView(DeleteView):
             Post.objects.get(id=data['post']).delete()
             return JsonResponse({'id': data['post']})
         return JsonResponse({'status': 500}, safe=False)
+
 
 class LikeView(CreateView):
     model = Like
@@ -116,7 +127,7 @@ class RegistrationView(CreateView):
             user.set_password(form.cleaned_data['password1'])
             user.save()
             messages.add_message(self.request, 20, 'You have been successfully registered!')
-            return redirect('/')
+            return redirect('/login')
         else:
             messages.add_message(self.request, 40, 'User with that username already exists')
         return form

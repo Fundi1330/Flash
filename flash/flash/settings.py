@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'testserver',
-    '127.0.0.1'
+    '127.0.0.1',
+    '192.168.0.106'
 ]
 
 
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'flash_app.apps.FlashAppConfig',
     'tailwind',
     'flash_css',
-    'django_browser_reload',
+    'django_browser_reload'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'flash.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [join(BASE_DIR, 'templates'), join(BASE_DIR, 'flash_app', 'chat', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

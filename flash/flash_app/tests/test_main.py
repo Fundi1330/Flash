@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from ..models import FlashUser
+from models import FlashUser
 
 # Create your tests here.
 class MainPageTest(TestCase):

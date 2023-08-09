@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <nav class="nav">
+        <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="h-14 w-14 rounded-full border border-neutral-300 object-cover inline">
+        <h2 class="inline"><a href="/profile/{{ user.id }}">{{ chat.name }}</a></h2>
+    </nav>
+    <section id="chat_messages" class="p-4 my-4 block overflow-auto h-2/3 text-right scroll-auto" style="max-height: 400px;;">
+        {% for message in chat_messages %}
+            {% if message.author == request.user %}
+                <div class="border-2 my-2 border-gray-400 rounded-2xl max-w-2xl p-3 bg-blue-400 float-right clear-both w-fit">
+                    <p class="text-right">{{ message.body }}</p>
+                </div>
+            {% else %}
+                <a href="/profile/{{ user.id }}" class="float-left clear-both flex items-center gap-2">
+                    <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="h-12 w-12 rounded-full border border-neutral-300 object-cover inline">
+                    <div class="border-2 my-2 border-gray-600 rounded-2xl max-w-2xl p-3 bg-gray-400 w-fit">
+                        <p class="text-left">{{ message.body }}</p>
+                    </div>
+                </a>
+            {% endif %}
+            {% empty %}
+                <p>No messages here...</p>
+        {% endfor %}
+        
+    </section>
+    <section class="flex justify-center items-center gap-3">
+        {% csrf_token %}
+        <textarea class="border-2 p-3 border-neutral-950 rounded " name="new_message" id="new_message" placeholder="Type something here..." cols="150" rows="1"></textarea>
+        <button id="write-msg-btn" data-id="{{ chat.id }}">Write!</button>
+    </section>
+    {% load static %}
+    <script src="{% static 'js/chat.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+{% endblock %}

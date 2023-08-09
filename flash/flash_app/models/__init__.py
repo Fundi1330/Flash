@@ -3,3 +3,4 @@ from .post import Post
 from .user import FlashUser
 from .follower import Follower
 from .like import Like
+from .base import Base
