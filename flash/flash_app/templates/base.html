@@ -47,6 +47,10 @@
         {% endif %}
     </ul>
     <main class="container p-4 mx-auto text-center">
+        <div class="fixed left-0 right-0 top-0 bottom-0" style="background-color: rgba(0, 0, 0, 0.6); display: none;" id="dark"></div>
+        <dialog id="search_result" class="z-20 p-4 rounded">
+            
+        </dialog>
         {% block content %}
         {% endblock %}
     </main>

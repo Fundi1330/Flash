@@ -1,6 +1,7 @@
 function show(id, input) {
     let dialog = document.getElementById(id);
     dialog.show();
+    document.getElementById('dark')
     input.disabled = true;
     dialog.addEventListener('close', () => {
         input.disabled = false;
@@ -69,7 +70,7 @@ function ajax() {
             },
             'success': (data) => {
                 document.getElementById('new_post').close();
-                document.getElementById('posts').insertAdjacentHTML(data['post']);
+                document.getElementById('posts').insertAdjacentHTML('beforebegin', data['post']);
             }
         });
     });

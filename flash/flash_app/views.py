@@ -9,7 +9,7 @@ from django.core.files import File
 from pathlib import Path
 
 from django.views.generic.base import TemplateView
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
 
 from .forms import RegistrationForm, LoginForm, PostForm
@@ -78,6 +78,16 @@ class DeletePostView(DeleteView):
             return JsonResponse({'id': data['post']})
         return JsonResponse({'status': 500}, safe=False)
 
+class SearchView(ListView):
+    model = Post
+    
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        data = request.POST
+        if 'data' in data.keys():
+            posts = Post.objects.filter(text__contains=data['data']).all().union(Post.objects.filter(title__contains=data['data']).all()) 
+            users = FlashUser.objects.filter(username__contains=data['data'])
+            return JsonResponse({'result': render_to_string('macros/search.html', {'posts': list(set(posts)), 'users': users})})
+        return JsonResponse({'status': 500}, safe=False)
 
 class LikeView(CreateView):
     model = Like

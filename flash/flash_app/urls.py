@@ -16,4 +16,5 @@ urlpatterns = [
     path('comment/', views.CommentView.as_view(), name='comment'),
     path('delete_post/', views.DeletePostView.as_view(), name='delete_post'),
     path('like/', views.LikeView.as_view(), name='like'),
+    path('search/', views.SearchView.as_view(), name='search')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

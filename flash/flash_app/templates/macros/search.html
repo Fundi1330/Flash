@@ -1,0 +1,13 @@
+<button id="search-close" class="float-right" data-id="search_result" onclick="closeDialog(this); ;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+{% for user in users %}
+    <a href="{% url 'profile' user.id %}" class="flex">
+        <img src="../..{{ user.avatar.url }}" alt="{{ user.username }}" class="h-14 w-14 rounded-full border border-neutral-300 object-cover">
+        <p class="ml-2 font-semibold">{{ user.username }}</p>
+    </a>
+    <hr class="my-2 bg-neutral-600">
+{% endfor %}
+{% for post in posts %}
+    <a data-id="search_result" onclick="closeDialog(this); console.log(document.getElementById('dark')); ; location.href = '#'; location.href = '#post-{{post.id}}';">
+        {% include 'macros/post.html' with post=post %}
+    </a>
+{% endfor %}

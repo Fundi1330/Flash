@@ -11,11 +11,20 @@ writeMessageBtn.addEventListener('click', () => {
         },
         'success': (data) => {
             const messages = document.getElementById('chat_messages');
-            if(messages.innerHTML.includes('<p>No messages here...</p>')) {
-                messages.innerHTML.replace('<p>No messages here...</p>', '');
+            let text = document.getElementById('no_messages');
+            if(text != null) {
+                messages.removeChild(text);
             }
             document.getElementById('new_message').value = '';
             messages.innerHTML += data['message'];
         }
     });
 });
+
+
+// document.addEventListener('mouseenter', (ev) => {
+//     const element = ev.target;
+//     if(element.classList.contains('message')) {
+//         const button = document.createElement('button');
+//     }
+// })

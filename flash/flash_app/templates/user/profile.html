@@ -36,9 +36,8 @@
         </div>
         
     </section>
-    <div class="fixed left-0 right-0 top-0 bottom-0" style="background-color: rgba(0, 0, 0, 0.6); display: none;" id="dark"></div>
     <dialog id="edit-profile" style="height: 90%; width: 80%;" class="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-md z-15 p-8">
-        <button id="{{ post.id}}-close" class="float-right" data-id="edit-profile" onclick="closeDialog(this);document.getElementById('dark').style.display = 'none'; document.body.style.overflow = 'auto';"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+        <button id="{{ post.id}}-close" class="float-right" data-id="edit-profile" onclick="closeDialog(this);; document.body.style.overflow = 'auto';"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
         <label for="bio">Edit bio</label>
         <textarea name="bio" id="bio" cols="30" maxlength="150" rows="10" class="mx-3 w-full form-input border-neutral-700 p-1 border focus:border-neutral-700 focus:outline focus:outline-1 shadow-md rounded">{{ user.bio }}</textarea>
         <input type="submit" data-url="/profile/{{ user.id }}" id="edit-profile-btn" value="Update" class="bg-teal-500 form-input focus:border-4 shadow-md hover:bg-teal-600 border-neutral-600 text-neutral-100 mt-3 p-2 cursor-pointer border-2 rounded">

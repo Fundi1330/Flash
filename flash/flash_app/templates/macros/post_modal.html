@@ -1,5 +1,5 @@
 <dialog id="{{ post.id }}" style="height: 90%; width: 80%;" class="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-md z-15 p-8">
-    <button id="{{ post.id}}-close" class="float-right" data-id="{{ post.id }}" onclick="closeDialog(this);document.getElementById('dark').style.display = 'none'; document.body.style.overflow = 'auto';"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+    <button id="{{ post.id}}-close" class="float-right" data-id="{{ post.id }}" onclick="closeDialog(this);; document.body.style.overflow = 'auto';"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
     
     <img src="/media/{{ post.images }}" alt="{{ post.title }}" class="w-2/4 h-full border float-left inline border-neutral-300 rounded">
     <div class="float-left inline px-6">

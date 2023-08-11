@@ -17,18 +17,19 @@ class StartChat(ListView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         following = [user.user for user in Follower.objects.all() if user.follower == self.request.user]
-        for chat, follower in zip(Chat.objects.all(), following):
-            if follower in chat.members.all():
-                following.pop(following.index(follower))
+
+        for chat in Chat.objects.all():
+            user = chat.members.filter().exclude(username=self.request.user.username).first()
+            if user in following:
+                following.pop(following.index(user))
         context['users'] = following
         return context
     
     def post(self, request, **kwargs):
         data = request.POST
-        print(data)
         if 'id' in data.keys():
             user = FlashUser.objects.get(id=data['id'])
-            if(not Chat.objects.filter(name=user.username, avatar=user.avatar).exists()):
+            if(not Chat.objects.filter(name=user.username, avatar=user.avatar, members__in=[request.user.id, user.id], author=request.user).exists()):
                 new_chat = Chat(name=user.username, avatar=user.avatar, author=request.user)
                 new_chat.save()
                 new_chat.members.add(user)
